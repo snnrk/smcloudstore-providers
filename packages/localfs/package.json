@@ -1,0 +1,22 @@
+{
+  "name": "@snnrk/smcloudstore-localfs",
+  "version": "0.0.1",
+  "description": "Local File System provider for SMCloudStore",
+  "main": "dist/LocalFsProvider.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snnrk/smcloudstore-providers.git"
+  },
+  "author": "OSANAI Noriaki <snnrk1002@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/snnrk/smcloudstore-providers/issues"
+  },
+  "homepage": "https://github.com/snnrk/smcloudstore-providers#readme",
+  "dependencies": {
+    "@smcloudstore/core": "^0.2.0"
+  }
+}

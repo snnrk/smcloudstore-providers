@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "CommonJS",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "outDir": "./dist",
+    "listFiles": false,
+    "sourceMap": true,
+    "declaration": true
+  },
+  "include": [
+    "packages/**/src/*"
+  ],
+  "exclude": [
+    "**/.git",
+    "**/node_modules"
+  ]
+}
