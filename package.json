@@ -9,7 +9,9 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test:lint": "ESLINT_USE_FLAT_CONFIG=true eslint --config eslint.config.mjs .",
+    "test:type": "tsc --noEmit",
+    "test:unit": "jest"
   },
   "author": "OSANAI Noriaki <snnrk1002@gmail.com>",
   "license": "MIT",
