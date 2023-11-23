@@ -1,0 +1,22 @@
+{
+  "version": "0.2",
+  "ignorePaths": [
+    ".devcontainer/**",
+    "node_modules/**",
+    "cspell.json",
+    "package.json",
+    "package-lock.json"
+  ],
+  "dictionaryDefinitions": [],
+  "dictionaries": [],
+  "words": [
+    "gridfs",
+    "memfs",
+    "smcloudstore",
+    "unmock"
+  ],
+  "ignoreWords": [
+    "endregion"
+  ],
+  "import": []
+}

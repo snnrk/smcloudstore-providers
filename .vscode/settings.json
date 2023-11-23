@@ -1,0 +1,58 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": false,
+  "eslint.enable": true,
+  "eslint.experimental.useFlatConfig": true,
+  "eslint.lintTask.enable": true,
+  "eslint.options": {
+    "overrideConfigFile": "eslint.config.mjs"
+  },
+  "eslint.run": "onSave",
+  "eslint.validate": [
+    "javascript",
+    "typescript"
+  ],
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "*.ts": "${capture}.spec.ts"
+  },
+  "files.exclude": {
+    "**/.DS_Store": true,
+    "**/.git": true,
+    "**/coverage": true,
+    "**/dist/**": true,
+    "**/Thumbs.db": true
+  },
+  "files.watcherExclude": {
+    "**/coverage/**": true,
+    "**/node_modules/**": true
+  },
+  "jest.autoRun": {
+    "onSave": "test-file",
+    "watch": false
+  },
+  "jest.monitorLongRun": 60000,
+  "prettier.ignorePath": ".gitignore",
+  "search.exclude": {
+    "**/coverage/**": true,
+    "**/node_modules": true
+  },
+  "typescript.format.enable": false,
+  "typescript.implementationsCodeLens.enabled": false,
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.suggest.enabled": true,
+  "typescript.tsserver.watchOptions": {
+    "watchDirectory": "useFsEvents",
+    "watchFile": "useFsEvents"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "cSpell.words": [
+    "localfs"
+  ]
+}
