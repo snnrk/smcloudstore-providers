@@ -21,7 +21,7 @@ jobs:
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
       - name: Install packages
-        run: npm install
+        run: npm clean-install
       - name: Types testing
         run: npm run test:type
       - name: Linter testing
