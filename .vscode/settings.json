@@ -36,6 +36,7 @@
     "watch": false
   },
   "jest.monitorLongRun": 60000,
+  "jest.pathToJest": "npm run test:unit",
   "prettier.ignorePath": ".gitignore",
   "search.exclude": {
     "**/coverage/**": true,

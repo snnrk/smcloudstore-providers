@@ -1,5 +1,6 @@
 import { fs, vol } from 'memfs';
 import { LocalFsBucket, LocalFsClient, LocalFsFile } from '../packages/localfs/src/LocalFsClient';
+import { readFromStream, writeToStream } from './helpers';
 
 jest.mock('fs', () => fs);
 jest.mock('fs/promises', () => fs.promises);
@@ -85,22 +86,11 @@ describe('LocalFsFile', () => {
       // #endregion
 
       // #region When
-      const run = () =>
-        new Promise((resolve, reject) => {
-          const chunks: Uint8Array[] = [];
-          try {
-            const rs = file.createReadStream(options);
-            rs.on('data', (data: Uint8Array) => {
-              chunks.push(data);
-            })
-              .on('end', () => {
-                resolve(Buffer.concat(chunks).toString());
-              })
-              .on('error', reject);
-          } catch (error) {
-            reject(error);
-          }
-        });
+      const run = async () => {
+        const rs = file.createReadStream(options);
+        const buffer = await readFromStream(rs);
+        return buffer.toString();
+      };
       // #endregion
 
       // #region Then
@@ -120,22 +110,11 @@ describe('LocalFsFile', () => {
       // #endregion
 
       // #region When
-      const run = () =>
-        new Promise((resolve, reject) => {
-          const chunks: Uint8Array[] = [];
-          try {
-            const rs = file.createReadStream(options);
-            rs.on('data', (data: Uint8Array) => {
-              chunks.push(data);
-            })
-              .on('end', () => {
-                resolve(Buffer.concat(chunks).toString());
-              })
-              .on('error', reject);
-          } catch (error) {
-            reject(error);
-          }
-        });
+      const run = async () => {
+        const rs = file.createReadStream(options);
+        const buffer = await readFromStream(rs);
+        return buffer.toString();
+      };
       // #endregion
 
       // #region Then
@@ -156,17 +135,10 @@ describe('LocalFsFile', () => {
       // #endregion
 
       // #region When
-      const run = () =>
-        new Promise((resolve, reject) => {
-          try {
-            const ws = file.createWriteStream(options);
-            ws.on('error', reject).on('finish', () => resolve(void 0));
-            ws.write(expected);
-            ws.end();
-          } catch (error) {
-            reject(error);
-          }
-        });
+      const run = async () => {
+        const ws = file.createWriteStream(options);
+        await writeToStream(ws, expected);
+      };
       // #endregion
 
       // #region Then
@@ -186,17 +158,10 @@ describe('LocalFsFile', () => {
       // #endregion
 
       // #region When
-      const run = () =>
-        new Promise((resolve, reject) => {
-          try {
-            const ws = file.createWriteStream(options);
-            ws.on('error', reject).on('finish', () => resolve(void 0));
-            ws.write(expected);
-            ws.end();
-          } catch (error) {
-            reject(error);
-          }
-        });
+      const run = async () => {
+        const ws = file.createWriteStream(options);
+        await writeToStream(ws, expected);
+      };
       // #endregion
 
       // #region Then

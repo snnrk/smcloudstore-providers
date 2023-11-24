@@ -1,6 +1,6 @@
-import { Readable, Writable } from 'stream';
 import { LocalFsClient } from '../packages/localfs/src/LocalFsClient';
 import { LocalFsProvider } from '../packages/localfs/src/LocalFsProvider';
+import { createDummyReadable, createDummyWritable } from './helpers';
 
 jest.mock('../packages/localfs/src/LocalFsClient');
 
@@ -281,45 +281,30 @@ describe('LocalFsProvider', () => {
   });
 
   describe('putObject()', () => {
-    /* eslint-disable require-jsdoc */
-    class Receiver extends Writable {
-      private _data: Uint8Array[] = [];
-      get data() {
-        return Buffer.concat(this._data).toString();
-      }
-      _write(chunk: Buffer, _encoding: string, callback: (error?: Error | null) => void) {
-        this._data.push(chunk);
-        callback();
-      }
-    }
-
     describe('when data is stream', () => {
       it('should put an object into the container', async () => {
         // #region Given
         const connection = { rootDir: '/data' };
         const container = '/bucket1';
         const path = 'file1';
-        const expected = 'data';
-        class Sender extends Readable {
-          _read(): void {
-            this.push(expected);
-            this.push(null);
-          }
-        }
-        const data = new Sender();
+        const data = 'data';
         const options = { metadata: {} };
-        const given = [container, path, data, options] satisfies Parameters<
-          typeof provider.putObject
-        >;
 
         const provider = new LocalFsProvider(connection);
-        const file = { createWriteStream: jest.fn() };
-        const receiver = new Receiver();
-        file.createWriteStream.mockReturnValue(receiver);
+        const { getReceived, writable } = createDummyWritable();
+        const file = { createWriteStream: jest.fn(() => writable) };
         const bucket = {
-          file: jest.fn().mockResolvedValue(file),
+          file: jest.fn(() => file),
         } as unknown as ReturnType<typeof LocalFsClient.prototype.bucket>;
         jest.mocked(LocalFsClient.prototype.bucket).mockReturnValue(bucket);
+
+        const given = [
+          container,
+          path,
+          createDummyReadable(data).readable,
+          options,
+        ] satisfies Parameters<typeof provider.putObject>;
+        const expected = data;
         // #endregion
 
         // #region When
@@ -330,7 +315,7 @@ describe('LocalFsProvider', () => {
         await expect(run()).resolves.toBeUndefined();
         expect(bucket.file).toHaveBeenCalledWith(path);
         expect(file.createWriteStream).toHaveBeenCalledWith(options.metadata);
-        expect(receiver.data).toEqual(expected);
+        expect(getReceived()).toEqual(expected);
         // #endregion
       });
     });
@@ -341,21 +326,21 @@ describe('LocalFsProvider', () => {
         const connection = { rootDir: '/data' };
         const container = '/bucket1';
         const path = 'file1';
-        const expected = 'data';
-        const data = Buffer.from(expected);
+        const data = 'data';
         const options = { metadata: {} };
-        const given = [container, path, data, options] satisfies Parameters<
-          typeof provider.putObject
-        >;
 
         const provider = new LocalFsProvider(connection);
-        const file = { createWriteStream: jest.fn() };
-        const receiver = new Receiver();
-        file.createWriteStream.mockReturnValue(receiver);
+        const { getReceived, writable } = createDummyWritable();
+        const file = { createWriteStream: jest.fn(() => writable) };
         const bucket = {
-          file: jest.fn().mockResolvedValue(file),
+          file: jest.fn(() => file),
         } as unknown as ReturnType<typeof LocalFsClient.prototype.bucket>;
         jest.mocked(LocalFsClient.prototype.bucket).mockReturnValue(bucket);
+
+        const given = [container, path, Buffer.from(data), options] satisfies Parameters<
+          typeof provider.putObject
+        >;
+        const expected = data;
         // #endregion
 
         // #region When
@@ -366,7 +351,7 @@ describe('LocalFsProvider', () => {
         await expect(run()).resolves.toBeUndefined();
         expect(bucket.file).toHaveBeenCalledWith(path);
         expect(file.createWriteStream).toHaveBeenCalledWith(options.metadata);
-        expect(receiver.data).toEqual(expected);
+        expect(getReceived()).toEqual(expected);
         // #endregion
       });
     });
@@ -377,21 +362,21 @@ describe('LocalFsProvider', () => {
         const connection = { rootDir: '/data' };
         const container = '/bucket1';
         const path = 'file1';
-        const expected = 'data';
-        const data = expected;
+        const data = 'data';
         const options = { metadata: {} };
+
+        const provider = new LocalFsProvider(connection);
+        const { getReceived, writable } = createDummyWritable();
+        const file = { createWriteStream: jest.fn(() => writable) };
+        const bucket = {
+          file: jest.fn(() => file),
+        } as unknown as ReturnType<typeof LocalFsClient.prototype.bucket>;
+        jest.mocked(LocalFsClient.prototype.bucket).mockReturnValue(bucket);
+
         const given = [container, path, data, options] satisfies Parameters<
           typeof provider.putObject
         >;
-
-        const provider = new LocalFsProvider(connection);
-        const file = { createWriteStream: jest.fn() };
-        const receiver = new Receiver();
-        file.createWriteStream.mockReturnValue(receiver);
-        const bucket = {
-          file: jest.fn().mockResolvedValue(file),
-        } as unknown as ReturnType<typeof LocalFsClient.prototype.bucket>;
-        jest.mocked(LocalFsClient.prototype.bucket).mockReturnValue(bucket);
+        const expected = data;
         // #endregion
 
         // #region When
@@ -402,7 +387,7 @@ describe('LocalFsProvider', () => {
         await expect(run()).resolves.toBeUndefined();
         expect(bucket.file).toHaveBeenCalledWith(path);
         expect(file.createWriteStream).toHaveBeenCalledWith(options.metadata);
-        expect(receiver.data).toEqual(expected);
+        expect(getReceived()).toEqual(expected);
         // #endregion
       });
     });
@@ -415,19 +400,19 @@ describe('LocalFsProvider', () => {
         const path = 'file1';
         const data = 1234;
         const options = { metadata: {} };
+
+        const provider = new LocalFsProvider(connection);
+        const { getReceived, writable } = createDummyWritable();
+        const file = { createWriteStream: jest.fn(() => writable) };
+        const bucket = {
+          file: jest.fn(() => file),
+        } as unknown as ReturnType<typeof LocalFsClient.prototype.bucket>;
+        jest.mocked(LocalFsClient.prototype.bucket).mockReturnValue(bucket);
+
         // @ts-expect-error
         const given = [container, path, data, options] satisfies Parameters<
           typeof provider.putObject
         >;
-
-        const provider = new LocalFsProvider(connection);
-        const file = { createWriteStream: jest.fn() };
-        const receiver = new Receiver();
-        file.createWriteStream.mockReturnValue(receiver);
-        const bucket = {
-          file: jest.fn().mockResolvedValue(file),
-        } as unknown as ReturnType<typeof LocalFsClient.prototype.bucket>;
-        jest.mocked(LocalFsClient.prototype.bucket).mockReturnValue(bucket);
         // #endregion
 
         // #region When
@@ -439,6 +424,7 @@ describe('LocalFsProvider', () => {
         await expect(run()).rejects.toThrow();
         expect(bucket.file).toHaveBeenCalledWith(path);
         expect(file.createWriteStream).not.toHaveBeenCalled();
+        expect(getReceived()).toEqual('');
         // #endregion
       });
     });
