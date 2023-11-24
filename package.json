@@ -9,6 +9,7 @@
   },
   "main": "index.js",
   "scripts": {
+    "build": "tsc -b tsconfig.build.json",
     "test:lint": "ESLINT_USE_FLAT_CONFIG=true eslint --config eslint.config.mjs .",
     "test:type": "tsc --noEmit",
     "test:unit": "jest"

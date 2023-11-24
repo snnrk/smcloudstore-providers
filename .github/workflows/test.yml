@@ -1,14 +1,12 @@
-name: Jest
-
+name: Tests
 on:
   push:
     paths:
       - "packages/**/src/**"
       - "test/**"
-
 jobs:
-  Test:
-    name: Run test codes
+  test:
+    name: Testing
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -28,4 +26,4 @@ jobs:
       - name: Linter testing
         run: npm run test:lint
       - name: Unit testing
-        run: npm run test:unit -- --bail --maxWorkers=100% --watchAll=false --coverage
+        run: npm run test:unit -- --bail --maxWorkers=100% --watchAll=false --coverage --coverageReporters="json-summary"
