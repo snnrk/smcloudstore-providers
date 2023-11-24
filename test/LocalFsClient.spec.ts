@@ -1,4 +1,3 @@
-import { Stats } from 'fs';
 import { fs, vol } from 'memfs';
 import { LocalFsBucket, LocalFsClient, LocalFsFile } from '../packages/localfs/src/LocalFsClient';
 
