@@ -1,9 +1,14 @@
 {
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
   },
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": false,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "editor.formatOnSave": true,
   "eslint.enable": true,
   "eslint.experimental.useFlatConfig": true,
   "eslint.lintTask.enable": true,
@@ -23,20 +28,27 @@
   "files.exclude": {
     "**/.DS_Store": true,
     "**/.git": true,
-    "**/coverage": true,
-    "**/dist/**": true,
     "**/Thumbs.db": true
   },
   "files.watcherExclude": {
     "**/coverage/**": true,
     "**/node_modules/**": true
   },
-  "jest.autoRun": {
-    "onSave": "test-file",
-    "watch": false
-  },
   "jest.monitorLongRun": 60000,
+  "jest.nodeEnv": {
+    "NODE_ENV": "test"
+  },
+  "jest.outputConfig": {
+    "clearOnRun": "test-results",
+    "revealOn": "run",
+    "revealWithFocus": "test-results"
+  },
   "jest.pathToJest": "npm run test:unit",
+  "jest.runMode": {
+    "coverage": true,
+    "deferred": true,
+    "type": "on-demand"
+  },
   "prettier.ignorePath": ".gitignore",
   "search.exclude": {
     "**/coverage/**": true,
@@ -49,11 +61,5 @@
   "typescript.tsserver.watchOptions": {
     "watchDirectory": "useFsEvents",
     "watchFile": "useFsEvents"
-  },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "cSpell.words": [
-    "localfs"
-  ]
+  }
 }

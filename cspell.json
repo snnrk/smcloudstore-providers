@@ -10,9 +10,12 @@
   "dictionaryDefinitions": [],
   "dictionaries": [],
   "words": [
+    "golevelup",
     "gridfs",
+    "localfs",
     "memfs",
     "smcloudstore",
+    "snnrk",
     "unmock"
   ],
   "ignoreWords": [

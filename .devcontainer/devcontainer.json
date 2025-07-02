@@ -1,11 +1,20 @@
 {
-  "name": "Node.js & TypeScript",
-  "dockerComposeFile": [
-    "docker-compose.yml"
+  "name": "smcloudstore-providers",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye",
+  "workspaceMount": "source=${localWorkspaceFolder},target=${containerWorkspaceFolder},type=bind,consistency=cached",
+  "mounts": [
+    {
+      "type": "volume",
+      "source": "workspace_node_modules",
+      "target": "${containerWorkspaceFolder}/node_modules"
+    }
   ],
-  "service": "workspace",
-  "workspaceFolder": "/workspace",
-  "postCreateCommand": "sudo chown -R node:node node_modules",
+  "containerUser": "node",
+  "remoteUser": "node",
+  "updateRemoteUserUID": true,
+  "onCreateCommand": "bash ${containerWorkspaceFolder}/.devcontainer/scripts/on-create.sh",
+  "postAttachCommand": "bash ${containerWorkspaceFolder}/.devcontainer/scripts/post-start.sh",
+  "postCreateCommand": "bash ${containerWorkspaceFolder}/.devcontainer/scripts/post-create.sh",
   "customizations": {
     "vscode": {
       "extensions": [
@@ -17,11 +26,16 @@
         "wix.vscode-import-cost"
       ],
       "settings": {
-        "editor.codeActionsOnSave": {
-          "source.fixAll.eslint": true
+        "[json]": {
+          "editor.defaultFormatter": "vscode.json-language-features"
         },
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.formatOnSave": false,
+        "[typescript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": "explicit"
+        },
+        "editor.formatOnSave": true,
         "eslint.enable": true,
         "eslint.experimental.useFlatConfig": true,
         "eslint.lintTask.enable": true,
@@ -38,19 +52,27 @@
         "files.exclude": {
           "**/.DS_Store": true,
           "**/.git": true,
-          "**/coverage": true,
-          "**/dist/**": true,
-          "**/Thumbs.db": true
+          "**/coverage": true
         },
         "files.watcherExclude": {
           "**/coverage/**": true,
           "**/node_modules/**": true
         },
-        "jest.autoRun": {
-          "onSave": "test-file",
-          "watch": false
-        },
         "jest.monitorLongRun": 60000,
+        "jest.nodeEnv": {
+          "NODE_ENV": "test"
+        },
+        "jest.outputConfig": {
+          "clearOnRun": "test-results",
+          "revealOn": "run",
+          "revealWithFocus": "test-results"
+        },
+        "jest.pathToJest": "npm run test:unit",
+        "jest.runMode": {
+          "coverage": true,
+          "deferred": true,
+          "type": "on-demand"
+        },
         "prettier.ignorePath": ".gitignore",
         "search.exclude": {
           "**/coverage/**": true,
@@ -63,14 +85,12 @@
         "typescript.tsserver.watchOptions": {
           "watchDirectory": "useFsEvents",
           "watchFile": "useFsEvents"
-        },
-        "[typescriptreact]": {
-          "editor.defaultFormatter": "esbenp.prettier-vscode"
         }
       }
     }
   },
-  "remoteEnv": {
+  "containerEnv": {
+    "CONTAINER_WORKSPACE_FOLDER": "${containerWorkspaceFolder}",
     "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
   }
 }
