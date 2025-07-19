@@ -1,4 +1,3 @@
-/* eslint-disable require-jsdoc */
 import {
   createReadStream,
   createWriteStream,
@@ -7,8 +6,9 @@ import {
   Stats,
   WriteStream,
 } from 'fs';
-import fs, { CreateReadStreamOptions, CreateWriteStreamOptions } from 'fs/promises';
-import path from 'path';
+import type { CreateReadStreamOptions, CreateWriteStreamOptions } from 'fs/promises';
+import * as fs from 'fs/promises';
+import * as path from 'path';
 import { Stream } from 'stream';
 
 export type LocalFsConnectionOptions = {

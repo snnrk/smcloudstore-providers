@@ -1,20 +1,14 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "CommonJS",
+    "target": "esnext",
+    "module": "commonjs",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
-    "listFiles": false,
     "sourceMap": true,
-    "declaration": true,
-    "composite": true
+    "incremental": false
   },
   "include": [
-    "packages/**/src/*"
-  ],
-  "exclude": [
-    "**/.git",
-    "**/node_modules"
+    "test/**/*"
   ]
 }

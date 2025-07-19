@@ -1,6 +1,7 @@
-import { LocalFsClient } from '../packages/localfs/src/LocalFsClient';
+import { createMock } from '@golevelup/ts-jest';
+import { LocalFsBucket, LocalFsClient, LocalFsFile } from '../packages/localfs/src/LocalFsClient';
 import { LocalFsProvider } from '../packages/localfs/src/LocalFsProvider';
-import { createDummyReadable, createDummyWritable } from './helpers';
+import { createDummyReadable, createDummyWritable } from './helper';
 
 jest.mock('../packages/localfs/src/LocalFsClient');
 
@@ -37,9 +38,7 @@ describe('LocalFsProvider', () => {
       const container = 'bucket1';
       const options = {};
       const provider = new LocalFsProvider(connection);
-      const bucket = { create: jest.fn() } as unknown as ReturnType<
-        typeof LocalFsClient.prototype.bucket
-      >;
+      const bucket = createMock<LocalFsBucket>({ create: jest.fn() });
       jest.mocked(LocalFsClient.prototype.bucket).mockReturnValue(bucket);
       // #endregion
 
@@ -61,9 +60,7 @@ describe('LocalFsProvider', () => {
       const connection = { rootDir: '/data' };
       const container = 'bucket1';
       const provider = new LocalFsProvider(connection);
-      const bucket = { delete: jest.fn() } as unknown as ReturnType<
-        typeof LocalFsClient.prototype.bucket
-      >;
+      const bucket = createMock<LocalFsBucket>({ delete: jest.fn() });
       jest.mocked(LocalFsClient.prototype.bucket).mockReturnValue(bucket);
       // #endregion
 
@@ -87,10 +84,10 @@ describe('LocalFsProvider', () => {
       const options = {};
       const expected = true;
       const provider = new LocalFsProvider(connection);
-      const bucket = {
+      const bucket = createMock<LocalFsBucket>({
         create: jest.fn(),
         exists: jest.fn().mockResolvedValue(expected),
-      } as unknown as ReturnType<typeof LocalFsClient.prototype.bucket>;
+      });
       jest.mocked(LocalFsClient.prototype.bucket).mockReturnValue(bucket);
       // #endregion
 
@@ -114,10 +111,10 @@ describe('LocalFsProvider', () => {
       const options = {};
       const expected = false;
       const provider = new LocalFsProvider(connection);
-      const bucket = {
+      const bucket = createMock<LocalFsBucket>({
         create: jest.fn(),
         exists: jest.fn().mockResolvedValue(expected),
-      } as unknown as ReturnType<typeof LocalFsClient.prototype.bucket>;
+      });
       jest.mocked(LocalFsClient.prototype.bucket).mockReturnValue(bucket);
       // #endregion
 
@@ -143,9 +140,9 @@ describe('LocalFsProvider', () => {
       const container = 'bucket1';
       const expected = true;
       const provider = new LocalFsProvider(connection);
-      const bucket = { exists: jest.fn().mockResolvedValue(expected) } as unknown as ReturnType<
-        typeof LocalFsClient.prototype.bucket
-      >;
+      const bucket = createMock<LocalFsBucket>({
+        exists: jest.fn().mockResolvedValue(expected),
+      });
       jest.mocked(LocalFsClient.prototype.bucket).mockReturnValue(bucket);
       // #endregion
 
@@ -167,10 +164,8 @@ describe('LocalFsProvider', () => {
       const connection = { rootDir: '/data' };
       const provider = new LocalFsProvider(connection);
       const expected = ['bucket1', 'bucket2'];
-      const buckets = expected.map((path) => ({ path })) as unknown as ReturnType<
-        typeof LocalFsClient.prototype.getBuckets
-      >;
-      jest.mocked(LocalFsClient.prototype.getBuckets).mockReturnValue(buckets);
+      const buckets = expected.map((path) => createMock<LocalFsBucket>({ path }));
+      jest.mocked(LocalFsClient.prototype.getBuckets).mockResolvedValue(buckets);
       // #endregion
 
       // #region When
@@ -192,9 +187,9 @@ describe('LocalFsProvider', () => {
       const path = 'file1';
       const provider = new LocalFsProvider(connection);
       const file = { delete: jest.fn() };
-      const bucket = {
+      const bucket = createMock<LocalFsBucket>({
         file: jest.fn().mockResolvedValue(file),
-      } as unknown as ReturnType<typeof LocalFsClient.prototype.bucket>;
+      });
       jest.mocked(LocalFsClient.prototype.bucket).mockReturnValue(bucket);
       // #endregion
 
@@ -218,9 +213,9 @@ describe('LocalFsProvider', () => {
       const path = 'file1';
       const provider = new LocalFsProvider(connection);
       const file = { createReadStream: jest.fn() };
-      const bucket = {
+      const bucket = createMock<LocalFsBucket>({
         file: jest.fn().mockResolvedValue(file),
-      } as unknown as ReturnType<typeof LocalFsClient.prototype.bucket>;
+      });
       jest.mocked(LocalFsClient.prototype.bucket).mockReturnValue(bucket);
       // #endregion
 
@@ -259,9 +254,9 @@ describe('LocalFsProvider', () => {
         });
         return obj;
       });
-      const bucket = {
+      const bucket = createMock<LocalFsBucket>({
         getFiles: jest.fn().mockResolvedValue(files),
-      } as unknown as ReturnType<typeof LocalFsClient.prototype.bucket>;
+      });
       jest.mocked(LocalFsClient.prototype.bucket).mockReturnValue(bucket);
       // #endregion
 
@@ -292,10 +287,10 @@ describe('LocalFsProvider', () => {
 
         const provider = new LocalFsProvider(connection);
         const { getReceived, writable } = createDummyWritable();
-        const file = { createWriteStream: jest.fn(() => writable) };
-        const bucket = {
-          file: jest.fn(() => file),
-        } as unknown as ReturnType<typeof LocalFsClient.prototype.bucket>;
+        const file = createMock<LocalFsFile>({ createWriteStream: jest.fn(() => writable) });
+        const bucket = createMock<LocalFsBucket>({
+          file: jest.fn().mockResolvedValue(file),
+        });
         jest.mocked(LocalFsClient.prototype.bucket).mockReturnValue(bucket);
 
         const given = [
@@ -331,10 +326,10 @@ describe('LocalFsProvider', () => {
 
         const provider = new LocalFsProvider(connection);
         const { getReceived, writable } = createDummyWritable();
-        const file = { createWriteStream: jest.fn(() => writable) };
-        const bucket = {
-          file: jest.fn(() => file),
-        } as unknown as ReturnType<typeof LocalFsClient.prototype.bucket>;
+        const file = createMock<LocalFsFile>({ createWriteStream: jest.fn(() => writable) });
+        const bucket = createMock<LocalFsBucket>({
+          file: jest.fn().mockResolvedValue(file),
+        });
         jest.mocked(LocalFsClient.prototype.bucket).mockReturnValue(bucket);
 
         const given = [container, path, Buffer.from(data), options] satisfies Parameters<
@@ -367,10 +362,10 @@ describe('LocalFsProvider', () => {
 
         const provider = new LocalFsProvider(connection);
         const { getReceived, writable } = createDummyWritable();
-        const file = { createWriteStream: jest.fn(() => writable) };
-        const bucket = {
-          file: jest.fn(() => file),
-        } as unknown as ReturnType<typeof LocalFsClient.prototype.bucket>;
+        const file = createMock<LocalFsFile>({ createWriteStream: jest.fn(() => writable) });
+        const bucket = createMock<LocalFsBucket>({
+          file: jest.fn().mockResolvedValue(file),
+        });
         jest.mocked(LocalFsClient.prototype.bucket).mockReturnValue(bucket);
 
         const given = [container, path, data, options] satisfies Parameters<
@@ -403,10 +398,10 @@ describe('LocalFsProvider', () => {
 
         const provider = new LocalFsProvider(connection);
         const { getReceived, writable } = createDummyWritable();
-        const file = { createWriteStream: jest.fn(() => writable) };
-        const bucket = {
-          file: jest.fn(() => file),
-        } as unknown as ReturnType<typeof LocalFsClient.prototype.bucket>;
+        const file = createMock<LocalFsFile>({ createWriteStream: jest.fn(() => writable) });
+        const bucket = createMock<LocalFsBucket>({
+          file: jest.fn().mockResolvedValue(file),
+        });
         jest.mocked(LocalFsClient.prototype.bucket).mockReturnValue(bucket);
 
         // @ts-expect-error

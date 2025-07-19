@@ -1,6 +1,4 @@
 import { Readable, Stream, Writable } from 'stream';
-import { StreamToBuffer as readFromStream } from '@smcloudstore/core/dist/StreamUtils';
-export { readFromStream };
 
 export const writeToStream = (ws: Writable, data: string | Buffer | Stream) =>
   new Promise((resolve, reject) => {

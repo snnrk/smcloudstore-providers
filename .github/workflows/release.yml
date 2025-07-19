@@ -20,11 +20,8 @@ jobs:
           scope: '@snnrk'
       - name: Install packages
         run: npm clean-install --include=dev
-      - name: Build Package
-        run: npm run build
-        env:
-          NODE_ENV: production
       - name: Publish packages/localfs
         run: npm publish -w packages/localfs publish --access=public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_ENV: production

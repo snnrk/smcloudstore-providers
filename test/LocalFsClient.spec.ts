@@ -1,9 +1,10 @@
-import { fs, vol } from 'memfs';
+import { vol } from 'memfs';
 import { LocalFsBucket, LocalFsClient, LocalFsFile } from '../packages/localfs/src/LocalFsClient';
-import { readFromStream, writeToStream } from './helpers';
+import { writeToStream } from './helper';
+import { StreamToBuffer } from '@smcloudstore/core/dist/StreamUtils';
 
-jest.mock('fs', () => fs);
-jest.mock('fs/promises', () => fs.promises);
+jest.mock('fs', () => jest.requireActual('memfs').fs);
+jest.mock('fs/promises', () => jest.requireActual('memfs').promises);
 
 const isExists = async (path: string) => vol.promises.stat(path);
 
@@ -88,7 +89,7 @@ describe('LocalFsFile', () => {
       // #region When
       const run = async () => {
         const rs = file.createReadStream(options);
-        const buffer = await readFromStream(rs);
+        const buffer = await StreamToBuffer(rs);
         return buffer.toString();
       };
       // #endregion
@@ -112,7 +113,7 @@ describe('LocalFsFile', () => {
       // #region When
       const run = async () => {
         const rs = file.createReadStream(options);
-        const buffer = await readFromStream(rs);
+        const buffer = await StreamToBuffer(rs);
         return buffer.toString();
       };
       // #endregion

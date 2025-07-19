@@ -9,7 +9,6 @@
   },
   "main": "index.js",
   "scripts": {
-    "build": "tsc -b tsconfig.build.json",
     "test:lint": "ESLINT_USE_FLAT_CONFIG=true eslint --config eslint.config.mjs .",
     "test:type": "tsc --noEmit",
     "test:unit": "jest"
@@ -24,6 +23,7 @@
     "packages/*"
   ],
   "devDependencies": {
+    "@golevelup/ts-jest": "^0.7.0",
     "@smcloudstore/core": "^0.2.0",
     "@swc/jest": "^0.2.29",
     "@types/eslint": "^8.44.7",
@@ -40,6 +40,7 @@
     "globals": "^13.23.0",
     "jest": "^29.7.0",
     "memfs": "^4.6.0",
+    "smcloudstore": "^0.2.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.3.2"
   }

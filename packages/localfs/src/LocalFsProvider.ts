@@ -1,4 +1,3 @@
-/* eslint-disable require-jsdoc */
 import { WriteStream } from 'fs';
 import { Duplex, Stream } from 'stream';
 import {
