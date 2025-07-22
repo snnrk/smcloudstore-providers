@@ -1,6 +1,6 @@
 {
   "name": "@snnrk/smcloudstore-localfs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Local File System provider for SMCloudStore",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
