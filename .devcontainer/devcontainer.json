@@ -18,32 +18,22 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "dbaeumer.vscode-eslint",
+        "biomejs.biome",
         "editorconfig.editorconfig",
-        "esbenp.prettier-vscode",
         "orta.vscode-jest",
         "streetsidesoftware.code-spell-checker",
         "wix.vscode-import-cost"
       ],
       "settings": {
-        "[json]": {
-          "editor.defaultFormatter": "vscode.json-language-features"
-        },
-        "[typescript]": {
-          "editor.defaultFormatter": "esbenp.prettier-vscode"
-        },
         "editor.codeActionsOnSave": {
-          "source.fixAll.eslint": "explicit"
+          "quickfix.biome": "explicit",
+          "source.fixAll.biome": "explicit",
+          "source.organizeImports.biome": "explicit",
+          "source.organizeImports": "never",
+          "source.removeUnusedImports": "never"
         },
+        "editor.defaultFormatter": "biomejs.biome",
         "editor.formatOnSave": true,
-        "eslint.enable": true,
-        "eslint.experimental.useFlatConfig": true,
-        "eslint.lintTask.enable": true,
-        "eslint.run": "onSave",
-        "eslint.validate": [
-          "javascript",
-          "typescript"
-        ],
         "explorer.fileNesting.enabled": true,
         "explorer.fileNesting.expand": false,
         "explorer.fileNesting.patterns": {
@@ -73,7 +63,6 @@
           "deferred": true,
           "type": "on-demand"
         },
-        "prettier.ignorePath": ".gitignore",
         "search.exclude": {
           "**/coverage/**": true,
           "**/node_modules": true
