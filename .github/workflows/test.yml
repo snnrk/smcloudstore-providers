@@ -1,32 +1,35 @@
 name: Tests
 on:
+  pull_request:
   push:
-    paths:
-      - "**/package.json"
-      - "**/tsconfig.json"
-      - "packages/**/src/**"
-      - "test/**"
   workflow_call:
+  workflow_dispatch:
 jobs:
   test:
     name: Testing
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version:
+          - '16.x'
+          - '18.x'
+          - '20.x'
     defaults:
       run:
         working-directory: .
     steps:
-      - uses: actions/checkout@v3
-      - name: Install and cache nodejs
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: ${{ matrix.node-version }}
           cache: 'npm'
-          cache-dependency-path: '**/package-lock.json'
-      - name: Install packages
+      - name: Install Dependencies
         run: npm clean-install
-      - name: Types testing
-        run: npm run test:type
-      - name: Linter testing
+      - name: Lint
         run: npm run test:lint
-      - name: Unit testing
-        run: npm run test:unit -- --bail --maxWorkers=100% --watchAll=false --coverage --coverageReporters="json-summary"
+      - name: Type Checking
+        run: npm run test:type
+      - name: Unit Testing
+        run: npm run test:unit:coverage
+

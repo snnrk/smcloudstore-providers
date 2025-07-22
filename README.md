@@ -5,3 +5,4 @@
 Storage Providers for [SMCloudStore](https://www.npmjs.com/package/smcloudstore), including:
 
   - Local file system (directory and files)
+  - GridFS (MongoDB)

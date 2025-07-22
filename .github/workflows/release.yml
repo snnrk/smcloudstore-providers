@@ -7,30 +7,31 @@ jobs:
     uses: ./.github/workflows/test.yml
   release:
     name: Publish package
-    needs: [ test ]
+    needs:
+      - test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Install Node
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '16'
-          registry-url: https://registry.npmjs.org
-          always-auth: true
-          scope: '@snnrk'
-      - name: Install packages
+          node-version: '20.x'
+          cache: 'npm'
+          registry-url: "https://registry.npmjs.org"
+          scope: "@snnrk"
+      - name: Install Dependencies
         run: npm clean-install --include=dev
       - name: Check Tag
         id: check-tag
         run: |
-          if [[ ${{ github.ref }} =~ ^refs/tags/@snnrk/localfs@ ]]; then
+          if [[ ${{ github.ref }} =~ ^refs/tags/@snnrk/smcloudstore-localfs@ ]]; then
             echo "package=localfs" >> $GITHUB_OUTPUT
-          elif [[ ${{ github.ref }} =~ ^refs/tags/@snnrk/gridfs@ ]]; then
+          elif [[ ${{ github.ref }} =~ ^refs/tags/@snnrk/smcloudstore-gridfs@ ]]; then
             echo "package=gridfs" >> $GITHUB_OUTPUT
           else
             echo "Invalid tag format" && exit 1
           fi
-      - name: Publish Package
+      - name: Publish Package @snnrk/smcloudstore-${{ steps.check-tag.outputs.package }}
         if: steps.check-tag.outputs.package != ''
         run: npm publish -w packages/${{ steps.check-tag.outputs.package }} --access=public
         env:

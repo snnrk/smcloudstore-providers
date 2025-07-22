@@ -2,7 +2,7 @@
   "name": "builder",
   "private": true,
   "version": "0.1.0",
-  "description": "GridFS provider for SMCloudStore",
+  "description": "Additional providers for SMCloudStore",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/snnrk/smcloudstore-gridfs.git"
@@ -11,7 +11,8 @@
   "scripts": {
     "test:lint": "biome lint .",
     "test:type": "tsc --noEmit",
-    "test:unit": "jest"
+    "test:unit": "jest",
+    "test:unit:coverage": "jest --coverage --coverageReporters=json-summary"
   },
   "author": "OSANAI Noriaki <snnrk1002@gmail.com>",
   "license": "MIT",
