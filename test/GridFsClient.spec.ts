@@ -1,3 +1,4 @@
+import { createMock } from '@golevelup/ts-jest';
 import {
   Cursor,
   Db,
@@ -8,16 +9,15 @@ import {
   MongoClient,
   MongoError,
 } from 'mongodb';
+import { Readable } from 'stream';
+import { match, P } from 'ts-pattern';
 import {
   GridFsClient,
   GridFsClientOptions,
   GridFsClientPutObjectOptions,
   MongoURI,
 } from '../packages/gridfs/src/GridFsClient';
-import { createMock } from '@golevelup/ts-jest';
 import { createDummyWritable } from './helper';
-import { Readable } from 'stream';
-import { match, P } from 'ts-pattern';
 
 jest.mock('mongodb', () => {
   const actual = jest.requireActual('mongodb');

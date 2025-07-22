@@ -1,6 +1,6 @@
-import { SMCloudStore } from './utils';
 import { StorageProvider } from '@smcloudstore/core/dist/StorageProvider';
 import { Readable } from 'stream';
+import { SMCloudStore } from './utils';
 
 const container = '/samples';
 const filename = 'test1.txt';

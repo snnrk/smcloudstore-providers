@@ -4,7 +4,7 @@ export const SMCloudStore: typeof SMCloudStoreOrig = {
   Create(provider: string, connection: any) {
     if (provider === 'localfs' || provider === 'gridfs') {
       if (!connection) {
-        throw Error('The connection argument must be non-empty');
+        throw new Error('The connection argument must be non-empty');
       }
 
       const providerModule = require(`@snnrk/smcloudstore-${provider}`).default;

@@ -1,5 +1,3 @@
-import * as path from 'path';
-import { Duplex, Stream } from 'stream';
 import {
   ListItemObject,
   ListResults,
@@ -7,6 +5,8 @@ import {
   StorageProvider,
 } from '@smcloudstore/core/dist/StorageProvider';
 import { IsStream } from '@smcloudstore/core/dist/StreamUtils';
+import * as path from 'path';
+import { Duplex, Stream } from 'stream';
 import {
   GridFsClient,
   GridFsClientOptions,
@@ -89,7 +89,7 @@ export class GridFsProvider extends StorageProvider {
     } else if (typeof data == 'string') {
       ds.push(data, 'utf8');
     } else {
-      throw Error('Invalid data argument: must be a stream, a Buffer or a string');
+      throw new Error('Invalid data argument: must be a stream, a Buffer or a string');
     }
     ds.push(null);
 

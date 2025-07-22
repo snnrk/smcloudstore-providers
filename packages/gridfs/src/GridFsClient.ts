@@ -7,8 +7,8 @@ import {
   MongoClientOptions,
   ObjectID,
 } from 'mongodb';
-import { pipeline } from 'stream/promises';
 import { Readable, Stream } from 'stream';
+import { pipeline } from 'stream/promises';
 
 export interface GridFsClientOptions {
   database: string;

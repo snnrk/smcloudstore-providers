@@ -1,7 +1,7 @@
+import { StreamToBuffer } from '@smcloudstore/core/dist/StreamUtils';
 import { vol } from 'memfs';
 import { LocalFsBucket, LocalFsClient, LocalFsFile } from '../packages/localfs/src/LocalFsClient';
 import { writeToStream } from './helper';
-import { StreamToBuffer } from '@smcloudstore/core/dist/StreamUtils';
 
 jest.mock('fs', () => jest.requireActual('memfs').fs);
 jest.mock('fs/promises', () => jest.requireActual('memfs').promises);

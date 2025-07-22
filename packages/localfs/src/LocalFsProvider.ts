@@ -1,5 +1,3 @@
-import { WriteStream } from 'fs';
-import { Duplex, Stream } from 'stream';
 import {
   ListItemObject,
   ListResults,
@@ -7,6 +5,8 @@ import {
   StorageProvider,
 } from '@smcloudstore/core/dist/StorageProvider';
 import { IsStream } from '@smcloudstore/core/dist/StreamUtils';
+import { WriteStream } from 'fs';
+import { Duplex, Stream } from 'stream';
 import {
   LocalFsBucketCreateOptions,
   LocalFsClient,
@@ -111,7 +111,7 @@ export class LocalFsProvider extends StorageProvider {
       } else if (typeof data == 'string') {
         (src as Duplex).push(data, 'utf8');
       } else {
-        throw Error('Invalid data argument: must be a stream, a Buffer or a string');
+        throw new Error('Invalid data argument: must be a stream, a Buffer or a string');
       }
       (src as Duplex).push(null);
     }

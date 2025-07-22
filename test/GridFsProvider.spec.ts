@@ -1,13 +1,13 @@
+import { createMock } from '@golevelup/ts-jest';
+import { Cursor, GridFSBucket, GridFSBucketReadStream, GridFSBucketWriteStream } from 'mongodb';
+import { Readable, Stream } from 'stream';
 import {
   GridFsClient,
   GridFsClientOptions,
   GridFsObject,
 } from '../packages/gridfs/src/GridFsClient';
-import { GridFsProvider, GridFSPutObjectOptions } from '../packages/gridfs/src/GridFsProvider';
-import { readFromStream, createDummyWritable } from './helper';
-import { Cursor, GridFSBucket, GridFSBucketReadStream, GridFSBucketWriteStream } from 'mongodb';
-import { createMock } from '@golevelup/ts-jest';
-import { Readable, Stream } from 'stream';
+import { GridFSPutObjectOptions, GridFsProvider } from '../packages/gridfs/src/GridFsProvider';
+import { createDummyWritable, readFromStream } from './helper';
 
 jest.mock('../packages/gridfs/src/GridFsClient');
 
