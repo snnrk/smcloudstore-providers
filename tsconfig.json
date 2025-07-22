@@ -6,9 +6,11 @@
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "sourceMap": true,
-    "incremental": false
+    "incremental": false,
+    "skipLibCheck": true
   },
   "include": [
+    "packages/**/src/**/*",
     "test/**/*"
   ]
 }

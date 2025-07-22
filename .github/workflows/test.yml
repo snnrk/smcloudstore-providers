@@ -2,6 +2,8 @@ name: Tests
 on:
   push:
     paths:
+      - "**/package.json"
+      - "**/tsconfig.json"
       - "packages/**/src/**"
       - "test/**"
   workflow_call:
