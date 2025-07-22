@@ -2,7 +2,9 @@
   "recommendations": [
     "biomejs.biome",
     "editorconfig.editorconfig",
+    "github.vscode-github-actions",
     "orta.vscode-jest",
+    "redhat.vscode-yaml",
     "streetsidesoftware.code-spell-checker",
     "wix.vscode-import-cost"
   ]
