@@ -2,8 +2,8 @@
   "name": "@snnrk/smcloudstore-localfs",
   "version": "0.0.1",
   "description": "Local File System provider for SMCloudStore",
-  "main": "dist/LocalFsProvider.js",
-  "types": "dist/LocalFsProvider.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf dist",
