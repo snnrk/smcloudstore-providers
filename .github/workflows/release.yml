@@ -20,8 +20,19 @@ jobs:
           scope: '@snnrk'
       - name: Install packages
         run: npm clean-install --include=dev
-      - name: Publish packages/localfs
-        run: npm publish -w packages/localfs publish --access=public
+      - name: Check Tag
+        id: check-tag
+        run: |
+          if [[ ${{ github.ref }} =~ ^refs/tags/@snnrk/localfs@ ]]; then
+            echo "package=localfs" >> $GITHUB_OUTPUT
+          elif [[ ${{ github.ref }} =~ ^refs/tags/@snnrk/gridfs@ ]]; then
+            echo "package=gridfs" >> $GITHUB_OUTPUT
+          else
+            echo "Invalid tag format" && exit 1
+          fi
+      - name: Publish Package
+        if: steps.check-tag.outputs.package != ''
+        run: npm publish -w packages/${{ steps.check-tag.outputs.package }} --access=public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_ENV: production
